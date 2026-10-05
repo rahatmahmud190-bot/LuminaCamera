@@ -1,0 +1,298 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		110000010000000000000001 /* LuminaCameraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120000010000000000000001 /* LuminaCameraApp.swift */; };
+		110000020000000000000001 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120000020000000000000001 /* PermissionManager.swift */; };
+		110000030000000000000001 /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120000030000000000000001 /* PermissionView.swift */; };
+		110000040000000000000001 /* GalleryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120000040000000000000001 /* GalleryManager.swift */; };
+		110000050000000000000001 /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120000050000000000000001 /* GalleryView.swift */; };
+		110000060000000000000001 /* PhotoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120000060000000000000001 /* PhotoDetailView.swift */; };
+		110000070000000000000001 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120000070000000000000001 /* SettingsView.swift */; };
+		110000080000000000000001 /* GalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120000080000000000000001 /* GalleryViewModel.swift */; };
+		110000090000000000000001 /* PhotoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120000090000000000000001 /* PhotoData.swift */; };
+		1100000A0000000000000001 /* CIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1200000A0000000000000001 /* CIImage+Extensions.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		120000010000000000000001 /* LuminaCameraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/LuminaCameraApp.swift; sourceTree = "<group>"; };
+		120000020000000000000001 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Managers/PermissionManager.swift; sourceTree = "<group>"; };
+		120000030000000000000001 /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI/Permissions/PermissionView.swift; sourceTree = "<group>"; };
+		120000040000000000000001 /* GalleryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Managers/GalleryManager.swift; sourceTree = "<group>"; };
+		120000050000000000000001 /* GalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI/Gallery/GalleryView.swift; sourceTree = "<group>"; };
+		120000060000000000000001 /* PhotoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI/Gallery/PhotoDetailView.swift; sourceTree = "<group>"; };
+		120000070000000000000001 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI/Settings/SettingsView.swift; sourceTree = "<group>"; };
+		120000080000000000000001 /* GalleryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModels/GalleryViewModel.swift; sourceTree = "<group>"; };
+		120000090000000000000001 /* PhotoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/PhotoData.swift; sourceTree = "<group>"; };
+		1200000A0000000000000001 /* CIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions/CIImage+Extensions.swift; sourceTree = "<group>"; };
+		1200000B0000000000000001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Resources/Info.plist; sourceTree = "<group>"; };
+		130000000000000000000001 /* LuminaCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LuminaCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		140000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		150000000000000000000000 = {
+			isa = PBXGroup;
+			children = (
+				150000010000000000000001 /* LuminaCamera */,
+				150000020000000000000001 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		150000010000000000000001 /* LuminaCamera */ = {
+			isa = PBXGroup;
+			children = (
+				120000010000000000000001 /* LuminaCameraApp.swift */,
+				120000020000000000000001 /* PermissionManager.swift */,
+				120000030000000000000001 /* PermissionView.swift */,
+				120000040000000000000001 /* GalleryManager.swift */,
+				120000050000000000000001 /* GalleryView.swift */,
+				120000060000000000000001 /* PhotoDetailView.swift */,
+				120000070000000000000001 /* SettingsView.swift */,
+				120000080000000000000001 /* GalleryViewModel.swift */,
+				120000090000000000000001 /* PhotoData.swift */,
+				1200000A0000000000000001 /* CIImage+Extensions.swift */,
+				1200000B0000000000000001 /* Info.plist */,
+			);
+			path = LuminaCamera;
+			sourceTree = "<group>";
+		};
+		150000020000000000000001 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				130000000000000000000001 /* LuminaCamera.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		160000000000000000000001 /* LuminaCamera */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 170000000000000000000001 /* Build configuration list for PBXNativeTarget "LuminaCamera" */;
+			buildPhases = (
+				180000000000000000000001 /* Sources */,
+				140000000000000000000001 /* Frameworks */,
+				190000000000000000000001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LuminaCamera;
+			productName = LuminaCamera;
+			productReference = 130000000000000000000001 /* LuminaCamera.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		200000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1400;
+				LastUpgradeCheck = 1400;
+				TargetAttributes = {
+					160000000000000000000001 = {
+						CreatedOnToolsVersion = 14.0;
+					};
+				};
+			};
+			buildConfigurationList = 170000000000000000000002 /* Build configuration list for PBXProject "LuminaCamera" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 150000000000000000000000;
+			productRefGroup = 150000020000000000000001 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				160000000000000000000001 /* LuminaCamera */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		190000000000000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		180000000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				110000010000000000000001 /* LuminaCameraApp.swift in Sources */,
+				110000020000000000000001 /* PermissionManager.swift in Sources */,
+				110000030000000000000001 /* PermissionView.swift in Sources */,
+				110000040000000000000001 /* GalleryManager.swift in Sources */,
+				110000050000000000000001 /* GalleryView.swift in Sources */,
+				110000060000000000000001 /* PhotoDetailView.swift in Sources */,
+				110000070000000000000001 /* SettingsView.swift in Sources */,
+				110000080000000000000001 /* GalleryViewModel.swift in Sources */,
+				110000090000000000000001 /* PhotoData.swift in Sources */,
+				1100000A0000000000000001 /* CIImage+Extensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		210000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+			};
+			name = Debug;
+		};
+		210000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+			};
+			name = Release;
+		};
+		210000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LuminaCamera/Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lumina.camera;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1";
+			};
+			name = Debug;
+		};
+		210000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LuminaCamera/Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lumina.camera;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		170000000000000000000001 /* Build configuration list for PBXNativeTarget "LuminaCamera" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				210000000000000000000003 /* Debug */,
+				210000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		170000000000000000000002 /* Build configuration list for PBXProject "LuminaCamera" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				210000000000000000000001 /* Debug */,
+				210000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 200000000000000000000001 /* Project object */;
+}
