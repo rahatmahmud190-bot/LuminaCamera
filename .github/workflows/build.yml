@@ -6,6 +6,56 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Auto Patch Swift Errors
+        run: |
+          # 1. Add CGPoint Codable conformance globally
+          cat << 'EOF' > Core/CGPointCodable.swift
+          import CoreGraphics
+          import Foundation
+
+          extension CGPoint: Codable {
+              public init(from decoder: Decoder) throws {
+                  var container = try decoder.unkeyedContainer()
+                  let x = try container.decode(Double.self)
+                  let y = try container.decode(Double.self)
+                  self.init(x: x, y: y)
+              }
+              public func encode(to encoder: Encoder) throws {
+                  var container = encoder.unkeyedContainer()
+                  try container.encode(x)
+                  try container.encode(y)
+              }
+          }
+          EOF
+
+          # 2. Fix duplicate CameraMode and GridType in UI components
+          python3 -c "
+          for path in ['UI/Components/ShutterButton.swift', 'Models/PhotoData.swift']:
+              try:
+                  with open(path, 'r') as f:
+                      content = f.read()
+                  import re
+                  content = re.sub(r'enum\s+CameraMode[^{]*\{[^}]*\}', '', content)
+                  content = re.sub(r'enum\s+GridType[^{]*\{[^}]*\}', '', content)
+                  with open(path, 'w') as f:
+                      f.write(content)
+              except Exception as e:
+                  pass
+          "
+
+          # 3. Ensure SettingsManager singleton exists
+          python3 -c "
+          import os
+          target = 'Managers/SettingsManager.swift'
+          if os.path.exists(target):
+              with open(target, 'r') as f:
+                  content = f.read()
+              if 'static let shared' not in content:
+                  content = content.replace('class SettingsManager: ObservableObject {', 'class SettingsManager: ObservableObject {\n    public static let shared = SettingsManager()\n')
+                  with open(target, 'w') as f:
+                      f.write(content)
+          "
+
       - name: Generate Clean Xcode Project
         run: |
           cat << 'EOF' > project.yml
