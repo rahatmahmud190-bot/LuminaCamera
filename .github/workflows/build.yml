@@ -5,26 +5,57 @@ jobs:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Xcode Project Structure
+
+      - name: Generate Clean Xcode Project
         run: |
-          mkdir -p LuminaCamera.xcodeproj
-          if [ -f project.pbxproj ]; then
-            cp project.pbxproj LuminaCamera.xcodeproj/
-          fi
-      - name: Build with Xcode
+          cat << 'EOF' > project.yml
+          name: LuminaCamera
+          options:
+            bundleIdPrefix: com.rahat
+            deploymentTarget:
+              iOS: "17.0"
+          targets:
+            LuminaCamera:
+              type: application
+              platform: iOS
+              deploymentTarget: "17.0"
+              sources:
+                - path: LuminaCamera
+                - path: App
+                - path: Core
+                - path: Extensions
+                - path: Managers
+                - path: Models
+                - path: Resources
+                - path: UI
+                - path: ViewModels
+              settings:
+                PRODUCT_BUNDLE_IDENTIFIER: com.rahat.luminacamera
+                CODE_SIGNING_ALLOWED: NO
+                CODE_SIGN_IDENTITY: ""
+                CODE_SIGNING_REQUIRED: NO
+          EOF
+          brew install xcodegen
+          xcodegen generate
+
+      - name: Build Application
         run: |
-          xcodebuild -project LuminaCamera.xcodeproj \
+          xcodebuild build \
+            -project LuminaCamera.xcodeproj \
             -scheme LuminaCamera \
             -configuration Debug \
             -sdk iphoneos \
-            -allowProvisioningUpdates \
             CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
             CONFIGURATION_BUILD_DIR=build/
+
       - name: Create IPA
         run: |
           mkdir -p Payload
           cp -r build/*.app Payload/
           zip -r LuminaCamera.ipa Payload
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
