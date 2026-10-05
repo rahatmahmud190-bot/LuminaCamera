@@ -1,0 +1,26 @@
+name: Build iOS App
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build with Xcode
+        run: |
+          xcodebuild -project LuminaCamera.xcodeproj \
+            -scheme LuminaCamera \
+            -configuration Debug \
+            -sdk iphoneos \
+            -allowProvisioningUpdates \
+            CODE_SIGNING_ALLOWED=NO \
+            CONFIGURATION_BUILD_DIR=build/
+      - name: Create IPA
+        run: |
+          mkdir -p Payload
+          cp -r build/*.app Payload/
+          zip -r LuminaCamera.ipa Payload
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: LuminaCamera-IPA
+          path: LuminaCamera.ipa
