@@ -2,13 +2,9 @@ name: Build iOS App
 on: [push, workflow_dispatch]
 jobs:
   build:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
-
-      - name: Select Xcode 16
-        run: |
-          sudo xcode-select -s /Applications/Xcode_16.0.app/Contents/Developer || sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 
       - name: Generate Clean Xcode Project
         run: |
@@ -16,7 +12,6 @@ jobs:
           name: LuminaCamera
           options:
             bundleIdPrefix: com.rahat
-            xcodeVersion: "15.0"
             deploymentTarget:
               iOS: "17.0"
           targets:
@@ -43,6 +38,8 @@ jobs:
           xcodegen generate
 
       - name: Build Application
+        env:
+          DEVELOPER_DIR: /Applications/Xcode_16.0.app/Contents/Developer
         run: |
           xcodebuild build \
             -project LuminaCamera.xcodeproj \
