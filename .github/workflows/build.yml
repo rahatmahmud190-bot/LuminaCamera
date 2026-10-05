@@ -5,6 +5,12 @@ jobs:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
+      - name: Setup Xcode Project Structure
+        run: |
+          mkdir -p LuminaCamera.xcodeproj
+          if [ -f project.pbxproj ]; then
+            cp project.pbxproj LuminaCamera.xcodeproj/
+          fi
       - name: Build with Xcode
         run: |
           xcodebuild -project LuminaCamera.xcodeproj \
