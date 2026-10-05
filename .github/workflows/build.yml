@@ -11,7 +11,7 @@ jobs:
           rm -rf CleanApp
           mkdir -p CleanApp
 
-          cat << 'EOF' > CleanApp/main.swift
+          cat << 'EOF' > CleanApp/App.swift
           import SwiftUI
           import AVFoundation
           import CoreImage
@@ -52,7 +52,6 @@ jobs:
                       }
 
                       VStack {
-                          // Top Header
                           HStack {
                               Text("Lumina Camera")
                                   .font(.headline)
@@ -67,7 +66,6 @@ jobs:
 
                           Spacer()
 
-                          // Filter Selector Bar
                           ScrollView(.horizontal, showsIndicators: false) {
                               HStack(spacing: 12) {
                                   ForEach(filters, id: \.self) { item in
@@ -89,9 +87,7 @@ jobs:
                           }
                           .padding(.bottom, 16)
 
-                          // Bottom Controls
                           HStack(spacing: 40) {
-                              // Gallery Thumbnail Placeholder
                               RoundedRectangle(cornerRadius: 8)
                                   .stroke(Color.white.opacity(0.6), lineWidth: 1.5)
                                   .frame(width: 44, height: 44)
@@ -100,7 +96,6 @@ jobs:
                                           .foregroundColor(.white)
                                   )
 
-                              // Shutter Button
                               Button(action: {
                                   camera.capturePhoto()
                               }) {
@@ -114,7 +109,6 @@ jobs:
                                   }
                               }
 
-                              // Flip Camera Button
                               Button(action: {
                                   camera.toggleCamera()
                               }) {
@@ -190,7 +184,6 @@ jobs:
 
               func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
                   guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
-                  connection.videoRotationAngle = 90
                   var ciImage = CIImage(cvPixelBuffer: pixelBuffer)
 
                   if activeFilter == "Mono" {
