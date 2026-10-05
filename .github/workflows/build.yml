@@ -6,12 +6,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Select Xcode 16
+        run: |
+          sudo xcode-select -s /Applications/Xcode_16.0.app/Contents/Developer || sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+
       - name: Generate Clean Xcode Project
         run: |
           cat << 'EOF' > project.yml
           name: LuminaCamera
           options:
             bundleIdPrefix: com.rahat
+            xcodeVersion: "15.0"
             deploymentTarget:
               iOS: "17.0"
           targets:
