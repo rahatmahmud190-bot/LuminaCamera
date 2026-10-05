@@ -20,7 +20,6 @@ jobs:
               platform: iOS
               deploymentTarget: "17.0"
               sources:
-                - path: LuminaCamera
                 - path: App
                 - path: Core
                 - path: Extensions
