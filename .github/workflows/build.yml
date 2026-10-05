@@ -6,68 +6,49 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Auto-Patch Code Mismatches
+      - name: Resolve Swift Duplicate Declarations
         run: |
-          # 1. Global CGPoint Codable conformance
-          cat << 'EOF' > Core/CGPointCodable.swift
-          import Foundation
-          import CoreGraphics
-
-          extension CGPoint: @retroactive Codable {
-              public init(from decoder: Decoder) throws {
-                  var container = try decoder.unkeyedContainer()
-                  let x = try container.decode(Double.self)
-                  let y = try container.decode(Double.self)
-                  self.init(x: x, y: y)
-              }
-              public func encode(to encoder: Encoder) throws {
-                  var container = encoder.unkeyedContainer()
-                  try container.encode(x)
-                  try container.encode(y)
-              }
-          }
-          EOF
-
-          # 2. De-duplicate CameraMode and GridType across secondary files
           python3 -c "
           import os, re
 
-          files_to_clean = [
-              'UI/Components/ShutterButton.swift',
-              'Models/PhotoData.swift',
-              'UI/Camera/ModeSelector.swift',
-              'UI/Camera/FocusIndicatorView.swift'
-          ]
+          # 1. Remove duplicate CropRatio and FilterParameters from EditorViewModel.swift
+          p_editor = 'ViewModels/EditorViewModel.swift'
+          if os.path.exists(p_editor):
+              with open(p_editor, 'r') as f:
+                  content = f.read()
+              content = re.sub(r'enum\s+CropRatio:[^{]*\{.*?\n\}', '', content, flags=re.DOTALL)
+              content = re.sub(r'struct\s+FilterParameters:[^{]*\{.*?\n\}', '', content, flags=re.DOTALL)
+              with open(p_editor, 'w') as f:
+                  f.write(content)
 
-          for p in files_to_clean:
+          # 2. Remove duplicate GridType from GlassCard.swift
+          p_glass = 'UI/Components/GlassCard.swift'
+          if os.path.exists(p_glass):
+              with open(p_glass, 'r') as f:
+                  content = f.read()
+              content = re.sub(r'public\s+enum\s+GridType[^{]*\{.*?\n\}', '', content, flags=re.DOTALL)
+              content = re.sub(r'enum\s+GridType[^{]*\{.*?\n\}', '', content, flags=re.DOTALL)
+              with open(p_glass, 'w') as f:
+                  f.write(content)
+
+          # 3. Clean ShutterButton & PhotoData duplicates
+          for p in ['UI/Components/ShutterButton.swift', 'Models/PhotoData.swift']:
               if os.path.exists(p):
                   with open(p, 'r') as f:
-                      txt = f.read()
-                  # Remove duplicate enum bodies while preserving other code
-                  txt = re.sub(r'public\s+enum\s+CameraMode[^{]*\{.*?\n\}', '', txt, flags=re.DOTALL)
-                  txt = re.sub(r'enum\s+CameraMode[^{]*\{.*?\n\}', '', txt, flags=re.DOTALL)
-                  txt = re.sub(r'public\s+enum\s+GridType[^{]*\{.*?\n\}', '', txt, flags=re.DOTALL)
-                  txt = re.sub(r'enum\s+GridType[^{]*\{.*?\n\}', '', txt, flags=re.DOTALL)
+                      content = f.read()
+                  content = re.sub(r'enum\s+CameraMode[^{]*\{.*?\n\}', '', content, flags=re.DOTALL)
                   with open(p, 'w') as f:
-                      f.write(txt)
-          "
+                      f.write(content)
 
-          # 3. Ensure global managers have shared instances
-          python3 -c "
-          import os
-
-          def ensure_shared(path, class_name):
-              if os.path.exists(path):
-                  with open(path, 'r') as f:
-                      c = f.read()
-                  if 'static let shared' not in c and class_name in c:
-                      c = c.replace(f'class {class_name}:', f'class {class_name}:\n    public static let shared = {class_name}()\n')
-                      with open(path, 'w') as f:
-                          f.write(c)
-
-          ensure_shared('Managers/SettingsManager.swift', 'SettingsManager')
-          ensure_shared('Managers/GalleryManager.swift', 'GalleryManager')
-          ensure_shared('Managers/HapticManager.swift', 'HapticManager')
+          # 4. Ensure GalleryManager has shared instance
+          p_gal = 'Managers/GalleryManager.swift'
+          if os.path.exists(p_gal):
+              with open(p_gal, 'r') as f:
+                  content = f.read()
+              if 'static let shared' not in content:
+                  content = re.sub(r'class\s+GalleryManager[^{]*\{', 'class GalleryManager: ObservableObject {\n    public static let shared = GalleryManager()\n', content)
+                  with open(p_gal, 'w') as f:
+                      f.write(content)
           "
 
       - name: Generate Clean Xcode Project
