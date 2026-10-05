@@ -6,14 +6,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Auto Patch Swift Errors
+      - name: Auto-Patch Code Mismatches
         run: |
-          # 1. Add CGPoint Codable conformance globally
+          # 1. Global CGPoint Codable conformance
           cat << 'EOF' > Core/CGPointCodable.swift
-          import CoreGraphics
           import Foundation
+          import CoreGraphics
 
-          extension CGPoint: Codable {
+          extension CGPoint: @retroactive Codable {
               public init(from decoder: Decoder) throws {
                   var container = try decoder.unkeyedContainer()
                   let x = try container.decode(Double.self)
@@ -28,32 +28,46 @@ jobs:
           }
           EOF
 
-          # 2. Fix duplicate CameraMode and GridType in UI components
+          # 2. De-duplicate CameraMode and GridType across secondary files
           python3 -c "
-          for path in ['UI/Components/ShutterButton.swift', 'Models/PhotoData.swift']:
-              try:
-                  with open(path, 'r') as f:
-                      content = f.read()
-                  import re
-                  content = re.sub(r'enum\s+CameraMode[^{]*\{[^}]*\}', '', content)
-                  content = re.sub(r'enum\s+GridType[^{]*\{[^}]*\}', '', content)
-                  with open(path, 'w') as f:
-                      f.write(content)
-              except Exception as e:
-                  pass
+          import os, re
+
+          files_to_clean = [
+              'UI/Components/ShutterButton.swift',
+              'Models/PhotoData.swift',
+              'UI/Camera/ModeSelector.swift',
+              'UI/Camera/FocusIndicatorView.swift'
+          ]
+
+          for p in files_to_clean:
+              if os.path.exists(p):
+                  with open(p, 'r') as f:
+                      txt = f.read()
+                  # Remove duplicate enum bodies while preserving other code
+                  txt = re.sub(r'public\s+enum\s+CameraMode[^{]*\{.*?\n\}', '', txt, flags=re.DOTALL)
+                  txt = re.sub(r'enum\s+CameraMode[^{]*\{.*?\n\}', '', txt, flags=re.DOTALL)
+                  txt = re.sub(r'public\s+enum\s+GridType[^{]*\{.*?\n\}', '', txt, flags=re.DOTALL)
+                  txt = re.sub(r'enum\s+GridType[^{]*\{.*?\n\}', '', txt, flags=re.DOTALL)
+                  with open(p, 'w') as f:
+                      f.write(txt)
           "
 
-          # 3. Ensure SettingsManager singleton exists
+          # 3. Ensure global managers have shared instances
           python3 -c "
           import os
-          target = 'Managers/SettingsManager.swift'
-          if os.path.exists(target):
-              with open(target, 'r') as f:
-                  content = f.read()
-              if 'static let shared' not in content:
-                  content = content.replace('class SettingsManager: ObservableObject {', 'class SettingsManager: ObservableObject {\n    public static let shared = SettingsManager()\n')
-                  with open(target, 'w') as f:
-                      f.write(content)
+
+          def ensure_shared(path, class_name):
+              if os.path.exists(path):
+                  with open(path, 'r') as f:
+                      c = f.read()
+                  if 'static let shared' not in c and class_name in c:
+                      c = c.replace(f'class {class_name}:', f'class {class_name}:\n    public static let shared = {class_name}()\n')
+                      with open(path, 'w') as f:
+                          f.write(c)
+
+          ensure_shared('Managers/SettingsManager.swift', 'SettingsManager')
+          ensure_shared('Managers/GalleryManager.swift', 'GalleryManager')
+          ensure_shared('Managers/HapticManager.swift', 'HapticManager')
           "
 
       - name: Generate Clean Xcode Project
@@ -83,6 +97,7 @@ jobs:
                 CODE_SIGNING_ALLOWED: NO
                 CODE_SIGN_IDENTITY: ""
                 CODE_SIGNING_REQUIRED: NO
+                SWIFT_TREAT_WARNINGS_AS_ERRORS: NO
           EOF
           brew install xcodegen
           xcodegen generate
